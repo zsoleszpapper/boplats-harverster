@@ -1,0 +1,46 @@
+
+
+LOGIN:
+wget https://www.boplatssyd.se/login --post-data 'login[username]=XXXXXXXXXXX&login[password]=YYYYYYYYYYYYYYY&form_id=bologin_form' --save-cookies cookies.txt --keep-session-cookies --delete-after
+
+GET LIST:
+wget https://www.boplatssyd.se/minsida/ --load-cookies cookies.txt -O - | grep '<span class="address"><a href="/lagenhet/' > lagenhetz.txt
+
+GET ID's:
+cat lagenhetz.txt | sed -s 's/.*\/lagenhet\/\([0-9]\+\).*/\1/g'
+
+GET ONE:
+wget https://www.boplatssyd.se/lagenhet/403778 --load-cookies cookies.txt -O - > joneriksson.html
+
+PARSE ONE:
+
+
+nyirati@melman:~/tmp/timereport$ python
+>>> from bs4 import BeautifulSoup
+>>> soup = BeautifulSoup("<html>data</html>", "lxml")
+>>> soup.body
+<body><p>data</p></body>
+
+
+
+
+  <div class="top-section">
+    <div class="object-adress">
+      <h1>John Ericssons väg 79A, Malmö</h1>
+      <h3 class="subaddress"> Malmö, Innerstaden, Dammfri </h3>
+    </div>
+
+    <div class="interest-container">
+                        <div class="number-interested preliminary-queue-count interest-item">
+            <span class="number">25</span>
+            <span class="text">din preliminära köplats om du anmäler intresse nu</span>
+          </div>
+
+      <div class="number-interested interest-item">
+        <span class="number">508</span>
+        <span class="text">personer har hittills anmält sitt intresse</span>
+      </div>
+    </div>
+  </div>
+
+
