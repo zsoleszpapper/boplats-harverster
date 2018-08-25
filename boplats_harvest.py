@@ -61,4 +61,4 @@ for link in links:
 
     for ndx, r in enumerate(row):
         row[ndx] = row[ndx].strip().replace(',','')
-    print ','.join(row)
+    print ','.join(row).encode('utf-8')
